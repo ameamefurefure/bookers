@@ -21,8 +21,11 @@ class BooksController < ApplicationController
     # 3. データをデータベースに保存するためのsaveメソッド実行
     book.save
     # 4. 詳細画面へリダイレクト
+    flash[:notice] = "Book was successfully created"
     redirect_to book_path(book.id)
+    
   end
+  
   
   def update
     book = Book.find(params[:id])
@@ -30,6 +33,11 @@ class BooksController < ApplicationController
     redirect_to book_path(book.id)  
   end
   
+  def destroy
+    book = Book.find(params[:id])  # データ（レコード）を1件取得
+    book.destroy  # データ（レコード）を削除
+    redirect_to '/books'  # 投稿一覧画面へリダイレクト  
+  end
   
   
   private
