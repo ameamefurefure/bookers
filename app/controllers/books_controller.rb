@@ -14,6 +14,8 @@ class BooksController < ApplicationController
 
   def edit
     @book = Book.find(params[:id])
+    @books = Book.all
+    book = Book.find(params[:id])
   end
 
   # def create
@@ -37,12 +39,27 @@ class BooksController < ApplicationController
     end
   end
 
-
   def update
-    book = Book.find(params[:id])
-    book.update(book_params)
-    redirect_to book_path(book.id)
+    # book = Book.find(params[:id])
+    # book.update(book_params)
+    # redirect_to book_path(book.id)
+    
+    @book = Book.new(book_params)
+    if @book.save
+      book = Book.find(params[:id])
+      @book.update(book_params)
+      redirect_to book_path(@book.id)
+    else
+      @books = Book.all
+      render :edit
+    end
   end
+  
+  # def update
+  #   book = Book.find(params[:id])
+  #   book.update(book_params)
+  #   redirect_to book_path(book.id)
+  # end
 
   def destroy
     book = Book.find(params[:id])  # データ（レコード）を1件取得
